@@ -7,7 +7,12 @@ import { AuthData } from './auth-data.model';
   providedIn: 'root',
 })
 export class AuthService {
+  private token: string;
   constructor(private http: HttpClient, private router: Router) {}
+
+  getToken() {
+    return this.token;
+  }
   createUser(
     name: string,
     email: string,
@@ -28,22 +33,23 @@ export class AuthService {
       });
   }
 
-  //   login(
-  //     name: string,
-  //     email: string,
-  //     password: string,
-  //     passwordConfirm: string
-  //   ) {
-  //     const authData: AuthData = {
-  //       name: name,
-  //       email: email,
-  //       password: password,
-  //       passwordConfirm: passwordConfirm,
-  //     };
-  //     this.http
-  //       .post('http://localhost:9000/api/users/login', authData)
-  //       .subscribe((response) => {
-  //         console.log(response);
-  //       });
-  //   }
+  // login(
+  //   name: string,
+  //   email: string,
+  //   password: string,
+  //   passwordConfirm: string
+  // ) {
+  //   const authData: AuthData = {
+  //     name: name,
+  //     email: email,
+  //     password: password,
+  //     passwordConfirm: passwordConfirm,
+  //   };
+  //   this.http
+  //     .post<{token:string}>('http://localhost:9000/api/users/login', authData)
+  //     .subscribe((response) => {
+  //       const token = response.token
+  //  this.token = token;
+  //     });
+  // }
 }
