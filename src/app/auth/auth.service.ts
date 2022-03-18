@@ -63,6 +63,10 @@ export class AuthService {
         const token = response.token;
         this.token = token;
         if (token) {
+          const expiresInDuration = 3600; //response.expiresIn;
+          this.tokenTimer = setTimeout(() => {
+            this.logout();
+          }, expiresInDuration * 1000);
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
           this.router.navigate(['/dashboard']);
