@@ -19,12 +19,14 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { HeaderComponent } from './header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
     LoginComponent,
     SignupComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

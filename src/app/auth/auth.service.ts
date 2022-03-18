@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { AuthData } from './auth-data.model';
 
 @Injectable({
@@ -8,10 +9,20 @@ import { AuthData } from './auth-data.model';
 })
 export class AuthService {
   private token: string;
+  private isAuthenticated = false;
+  private tokenTimer: any;
+  private authStatusListener = new Subject<boolean>();
   constructor(private http: HttpClient, private router: Router) {}
 
   getToken() {
     return this.token;
+  }
+  getIsAuth() {
+    return this.isAuthenticated;
+  }
+
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
   }
   createUser(
     name: string,
@@ -26,30 +37,49 @@ export class AuthService {
       passwordConfirm: passwordConfirm,
     };
     this.http
-      .post('http://localhost:9000/api/v1/users/signup', authData)
+      .post<{ token: string }>(
+        'http://localhost:9000/api/v1/users/signup',
+        authData
+      )
       .subscribe((response) => {
         console.log(response);
-        this.router.navigate(['/dashboard']);
+        const token = response.token;
+        this.token = token;
+        if (token) {
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true);
+          this.router.navigate(['/dashboard']);
+        }
       });
   }
 
-  // login(
-  //   name: string,
-  //   email: string,
-  //   password: string,
-  //   passwordConfirm: string
-  // ) {
-  //   const authData: AuthData = {
-  //     name: name,
-  //     email: email,
-  //     password: password,
-  //     passwordConfirm: passwordConfirm,
-  //   };
-  //   this.http
-  //     .post<{token:string}>('http://localhost:9000/api/users/login', authData)
-  //     .subscribe((response) => {
-  //       const token = response.token
-  //  this.token = token;
-  //     });
-  // }
+  login(email: string, password: string) {
+    this.http
+      .post<{ token: string }>('http://localhost:9000/api/v1/users/login', {
+        email: email,
+        password: password,
+      })
+      .subscribe((response) => {
+        const token = response.token;
+        this.token = token;
+        if (token) {
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true);
+          this.router.navigate(['/dashboard']);
+        }
+      });
+  }
+
+  logout() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+    clearTimeout(this.tokenTimer);
+    this.clearAuthData();
+    this.router.navigate(['/']);
+  }
+  private clearAuthData() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
+  }
 }
