@@ -1,0 +1,25 @@
+<mat-card>
+  <form [formGroup]="form" (submit)="onSaveSite()">
+    <mat-form-field>
+      <mat-label>Enter the name of the site</mat-label>
+      <input matInput formControlName="name" type="text" />
+      <mat-error *ngIf="form.get('name')!.invalid"
+        >Please provide a valid name for the site</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your Description</mat-label>
+      <textarea
+        matNativeControl
+        rows="6"
+        formControlName="description"
+      ></textarea>
+      <mat-error *ngIf="form.get('description')!.invalid"
+        >Please provide a valid Description</mat-error
+      >
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" type="submit">Save site</button>
+  </form>
+</mat-card>
