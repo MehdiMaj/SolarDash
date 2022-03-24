@@ -1,0 +1,21 @@
+<mat-card>
+  <form [formGroup]="form" (submit)="onSaveZone()">
+    <mat-form-field>
+      <mat-label>Select an option</mat-label>
+      <mat-select formControlName="site" [(value)]="selected">
+        <mat-option *ngFor="let site of sites" value="{{ site.id }}">
+          {{ site.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter the name of the zone</mat-label>
+      <input matInput formControlName="name" type="text" />
+      <mat-error *ngIf="form.get('name')!.invalid"
+        >Please provide a valid name for the site</mat-error
+      >
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" type="submit">Save zone</button>
+  </form>
+</mat-card>

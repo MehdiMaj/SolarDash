@@ -6,6 +6,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SiteCreateComponent } from './sites/sites-create/site-create.component';
 import { SiteListComponent } from './sites/sites-list/site-list.component';
+import { ZoneCreateComponent } from './zones/zone-create/zone-create.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
       {
         path: 'edit/:siteId',
         component: SiteCreateComponent,
+      },
+      {
+        path: 'create-zone',
+        component: ZoneCreateComponent,
       },
     ],
   },

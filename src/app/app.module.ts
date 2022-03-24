@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -26,7 +27,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { HeaderComponent } from './header/header.component';
 import { SiteCreateComponent } from './sites/sites-create/site-create.component';
 import { SiteListComponent } from './sites/sites-list/site-list.component';
-import { ZoneCreateComponent } from './zones/sites-create/zone-create.component';
+import { ZoneCreateComponent } from './zones/zone-create/zone-create.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ZoneCreateComponent } from './zones/sites-create/zone-create.component'
     MatMenuModule,
     MatPaginatorModule,
     MatExpansionModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

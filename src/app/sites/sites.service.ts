@@ -25,7 +25,7 @@ export class SitesService {
       });
   }
 
-  getSites(SitesPerPage: number, currentPage: number) {
+  getSites(SitesPerPage?: number, currentPage?: number) {
     const queryParams = `?limit=${SitesPerPage}&page=${currentPage}`;
     this.http
       .get<{ status: string; data: any; results: number }>(

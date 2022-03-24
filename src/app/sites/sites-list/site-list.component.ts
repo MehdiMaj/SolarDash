@@ -17,14 +17,14 @@ export class SiteListComponent implements OnInit, OnDestroy {
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   userIsAuthenticated = false;
-  private postsSub: Subscription;
+  private sitesSub: Subscription;
 
   constructor(public sitesService: SitesService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
     this.sitesService.getSites(this.sitesPerPage, this.currentPage);
-    this.postsSub = this.sitesService
+    this.sitesSub = this.sitesService
       .getSiteUpdateListener()
       .subscribe((siteData: { sites: Site[]; siteCount: number }) => {
         this.isLoading = false;
@@ -47,6 +47,6 @@ export class SiteListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.postsSub.unsubscribe();
+    this.sitesSub.unsubscribe();
   }
 }

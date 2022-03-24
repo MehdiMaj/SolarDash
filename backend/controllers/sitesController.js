@@ -1,8 +1,6 @@
 const Site = require("../models/siteModel");
 const factory = require("../controllers/handlerFactory");
 const catchAsync = require("../utils/catchAsync");
-const { promisify } = require("util");
-const jwt = require("jsonwebtoken");
 
 exports.createSite = catchAsync(async (req, res, next) => {
   userId = req.user._id;

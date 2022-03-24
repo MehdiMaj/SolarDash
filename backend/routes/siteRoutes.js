@@ -1,7 +1,10 @@
 const express = require("express");
 const sitesController = require("./../controllers/sitesController");
 const authController = require("../controllers/authController");
+const zoneRouter = require("../routes/zoneRoutes");
 const router = express.Router();
+
+router.use("/:siteId/zones", zoneRouter);
 
 router.use(authController.protect);
 
