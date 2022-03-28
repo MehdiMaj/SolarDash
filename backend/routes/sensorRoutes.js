@@ -17,7 +17,7 @@ router
 router
   .route("/:id")
   .delete(sensorController.deleteSensor)
-  .patch(sensorController.updateSensor)
+  .patch(sensorController.getIdSensor, sensorController.updateSensor)
   .get(sensorController.getSensor);
 
 module.exports = router;

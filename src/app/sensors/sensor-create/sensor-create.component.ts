@@ -42,6 +42,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   onSaveSensor() {
     const ID = this.form.value.ID;
     const zone = this.form.value.zone;
+    console.log(ID, zone);
     this.sensorService.addSensor(ID, zone);
   }
   ngOnDestroy() {

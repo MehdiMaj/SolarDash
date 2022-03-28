@@ -8,7 +8,12 @@ exports.setZoneId = (req, res, next) => {
 
   next();
 };
-
+exports.getIdSensor = catchAsync(async (req, res, next) => {
+  const sensor = await Sensor.findOne({ sensorId: req.params.id });
+  console.log(sensor);
+  req.params.id = sensor._id;
+  next();
+});
 exports.createSensor = factory.createOne(Sensor);
 exports.getSensors = factory.getAll(Sensor);
 
