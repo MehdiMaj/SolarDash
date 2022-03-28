@@ -16,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -28,6 +29,9 @@ import { HeaderComponent } from './header/header.component';
 import { SiteCreateComponent } from './sites/sites-create/site-create.component';
 import { SiteListComponent } from './sites/sites-list/site-list.component';
 import { ZoneCreateComponent } from './zones/zone-create/zone-create.component';
+import { ZoneListComponent } from './zones/zone-list/zone-list.component';
+import { SensorCreateComponent } from './sensors/sensor-create/sensor-create.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,9 @@ import { ZoneCreateComponent } from './zones/zone-create/zone-create.component';
     SiteCreateComponent,
     SiteListComponent,
     ZoneCreateComponent,
+    ZoneListComponent,
+    SensorCreateComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +66,7 @@ import { ZoneCreateComponent } from './zones/zone-create/zone-create.component';
     MatPaginatorModule,
     MatExpansionModule,
     MatSelectModule,
+    MatTableModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

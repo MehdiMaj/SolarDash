@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { Site } from './site.model';
 
 @Injectable({ providedIn: 'root' })
-export class SitesService {
+export class SiteService {
   private sites: Site[] = [];
   private sitesUpdated = new Subject<{ sites: Site[]; siteCount: number }>();
   constructor(private http: HttpClient, private router: Router) {}
@@ -18,10 +18,10 @@ export class SitesService {
     this.http
       .post<{ message: string; site: Site }>(
         'http://localhost:9000/api/v1/sites',
-        formData
+        { name: formData.get('name'), description: formData.get('description') }
       )
       .subscribe((responseData) => {
-        console.log(responseData);
+        this.router.navigate(['dashboard/list-sites']);
       });
   }
 

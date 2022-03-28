@@ -1,0 +1,22 @@
+<mat-card>
+  <form [formGroup]="form" (submit)="onSaveSensor()">
+    <mat-form-field>
+      <mat-label>Enter the ID of the sensor</mat-label>
+      <input matInput formControlName="ID" type="text" />
+      <mat-error *ngIf="form.get('ID')!.invalid"
+        >Please provide a valid name for the sensor</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select an option</mat-label>
+      <mat-select formControlName="zone" [(value)]="selected">
+        <mat-option *ngFor="let zone of zones" value="{{ zone.id }}">
+          {{ zone.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" type="submit">Save zone</button>
+  </form>
+</mat-card>

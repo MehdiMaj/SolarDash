@@ -1,25 +1,20 @@
 const Site = require("../models/siteModel");
+const Zone = require("../models/zoneModel");
 const factory = require("../controllers/handlerFactory");
 const catchAsync = require("../utils/catchAsync");
 
-exports.createSite = catchAsync(async (req, res, next) => {
-  userId = req.user._id;
+exports.setUserId = (req, res, next) => {
+  if (!req.body.user) req.body.user = req.user._id;
+  next();
+};
 
-  const site = new Site({
-    name: req.body.name,
-    description: req.body.description,
-    user: userId,
-  });
-  const doc = await Site.create(site);
-  res.status(204).json({
-    status: "success",
-    data: {
-      data: doc,
-    },
-  });
-});
-
+exports.createSite = factory.createOne(Site);
 exports.getSites = factory.getAll(Site);
 exports.deleteSite = factory.deleteOne(Site);
 exports.updateSite = factory.updateOne(Site);
-exports.getSite = factory.getOne(Site);
+exports.getSite = factory.getOne(Site, { path: "zones" });
+
+exports.deleteZoneWithSite = catchAsync(async (req, res, next) => {
+  await Zone.deleteMany({ site: req.params.id });
+  next();
+});

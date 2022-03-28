@@ -10,11 +10,11 @@ router.use(authController.protect);
 
 router
   .route("/")
-  .post(sitesController.createSite)
-  .get(sitesController.getSites);
+  .post(sitesController.setUserId, sitesController.createSite)
+  .get(sitesController.setUserId, sitesController.getSites);
 router
   .route("/:id")
-  .delete(sitesController.deleteSite)
+  .delete(sitesController.deleteZoneWithSite, sitesController.deleteSite)
   .patch(sitesController.updateSite)
   .get(sitesController.getSite);
 

@@ -10,7 +10,13 @@
   <a [matMenuTriggerFor]="Zones"> <i class="fa fa-anchor"></i>Zones </a>
   <mat-menu #Zones="matMenu">
     <a mat-menu-item routerLink="create-zone">add Zone</a>
-    <a mat-menu-item>My Zones</a>
+    <a mat-menu-item routerLink="list-zones">My Zones</a>
+  </mat-menu>
+
+  <a [matMenuTriggerFor]="Sensors"> <i class="fa fa-barcode"></i>Sensors </a>
+  <mat-menu #Sensors="matMenu">
+    <a mat-menu-item routerLink="create-sensor">add sensor</a>
+    <a mat-menu-item>My Sensors</a>
   </mat-menu>
 </div>
 

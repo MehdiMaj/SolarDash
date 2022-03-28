@@ -25,6 +25,10 @@ body {
   color: white;
 }
 
+.sidebar a:active {
+  color: red;
+}
+
 .sidebar a:hover:not(.active) {
   background-color: #555;
   color: white;

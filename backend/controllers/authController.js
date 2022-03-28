@@ -43,10 +43,6 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
   });
 
-  //const url = `${req.protocol}://${req.get("host")}/me`;
-  // console.log(url);
-  //await new Email(newUser, url).sendWelcome();
-
   createSendToken(newUser, 201, req, res);
 });
 
@@ -178,9 +174,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   // 3) Send it to user's email
   try {
-    const resetURL = `${req.protocol}://${req.get(
-      "host"
-    )}/api/v1/users/resetPassword/${resetToken}`;
+    const resetURL = `${req.protocol}://127.0.0.1:4200/forgot-password/${resetToken}`;
     await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
@@ -200,6 +194,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
+  console.log(req.body.password);
+  console.log(req.body.passwordConfirm);
   // 1) Get user based on the token
   const hashedToken = crypto
     .createHash("sha256")

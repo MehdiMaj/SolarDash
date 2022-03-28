@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { Site } from '../site.model';
-import { SitesService } from '../sites.service';
+import { SiteService } from '../site.service';
 
 @Component({
   selector: 'app-site-list',
@@ -19,12 +19,12 @@ export class SiteListComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private sitesSub: Subscription;
 
-  constructor(public sitesService: SitesService) {}
+  constructor(public siteService: SiteService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.sitesService.getSites(this.sitesPerPage, this.currentPage);
-    this.sitesSub = this.sitesService
+    this.siteService.getSites(this.sitesPerPage, this.currentPage);
+    this.sitesSub = this.siteService
       .getSiteUpdateListener()
       .subscribe((siteData: { sites: Site[]; siteCount: number }) => {
         this.isLoading = false;
@@ -36,13 +36,13 @@ export class SiteListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.sitesPerPage = pageData.pageSize;
-    this.sitesService.getSites(this.sitesPerPage, this.currentPage);
+    this.siteService.getSites(this.sitesPerPage, this.currentPage);
   }
 
   onDelete(postId: string) {
     this.isLoading = true;
-    this.sitesService.deleteSite(postId).subscribe(() => {
-      this.sitesService.getSites(this.sitesPerPage, this.currentPage);
+    this.siteService.deleteSite(postId).subscribe(() => {
+      this.siteService.getSites(this.sitesPerPage, this.currentPage);
     });
   }
 

@@ -20,5 +20,13 @@ zonesSchema.pre("save", async function (next) {
   next();
 });
 
+zonesSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "site",
+    select: "name description",
+  });
+  next();
+});
+
 const Zone = mongoose.model("Zone", zonesSchema);
 module.exports = Zone;

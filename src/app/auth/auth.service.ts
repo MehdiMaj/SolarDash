@@ -52,7 +52,42 @@ export class AuthService {
         }
       });
   }
-
+  forgotPassword(email: string) {
+    this.http
+      .post<{ status: string; token: string }>(
+        'http://localhost:9000/api/v1/users/forgotPassword',
+        {
+          email: email,
+        }
+      )
+      .subscribe((response) => {});
+  }
+  resetPassword(password: string, passwordConfirm: string, token: string) {
+    this.http
+      .patch<{ status: string; token: string }>(
+        'http://localhost:9000/api/v1/users/resetPassword/' + token,
+        {
+          password: password,
+          passwordConfirm: passwordConfirm,
+        }
+      )
+      .subscribe((response) => {
+        const token = response.token;
+        this.token = token;
+        if (token) {
+          const expiresInDuration = 3600; //response.expiresIn;
+          this.setAuthTimer(expiresInDuration);
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true);
+          const now = new Date();
+          const expirationDate = new Date(
+            now.getTime() + expiresInDuration * 1000
+          );
+          this.saveAuthData(token, expirationDate);
+          this.router.navigate(['/dashboard']);
+        }
+      });
+  }
   login(email: string, password: string) {
     this.http
       .post<{ token: string }>('http://localhost:9000/api/v1/users/login', {

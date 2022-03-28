@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Site } from '../site.model';
-import { SitesService } from '../sites.service';
+import { SiteService } from '../site.service';
 
 @Component({
   selector: 'app-create-site',
@@ -15,10 +15,7 @@ export class SiteCreateComponent implements OnInit {
   private siteId: string;
   isLoading = false;
   site: Site;
-  constructor(
-    public sitesService: SitesService,
-    public route: ActivatedRoute
-  ) {}
+  constructor(public siteService: SiteService, public route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -32,7 +29,7 @@ export class SiteCreateComponent implements OnInit {
         this.mode = 'edit';
         this.siteId = paramMap.get('siteId');
         this.isLoading = true;
-        this.sitesService.getSite(this.siteId).subscribe((postData) => {
+        this.siteService.getSite(this.siteId).subscribe((postData) => {
           this.isLoading = false;
           this.site = {
             id: postData.data._id,
@@ -59,9 +56,9 @@ export class SiteCreateComponent implements OnInit {
     if (this.mode === 'create') {
       const name = this.form.value.name;
       const description = this.form.value.description;
-      this.sitesService.addSite(name, description);
+      this.siteService.addSite(name, description);
     } else {
-      this.sitesService.updateSite(
+      this.siteService.updateSite(
         this.siteId,
         this.form.value.name,
         this.form.value.description

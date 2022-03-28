@@ -29,15 +29,13 @@ exports.updateOne = (Model) =>
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: doc,
-      },
+      data: doc,
     });
   });
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log(req.body.name);
+    console.log(req.body);
     const doc = await Model.create(req.body);
     res.status(201).json({
       status: "success",
@@ -62,20 +60,15 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    // To allow for nested GET reviews on tour (hack)
     let filter = {};
-    let fetchedSites;
-    if (req.params.siteId) filter = { site: req.params.siteId };
-    filter = { user: req.user._id };
+    let fetchedModel;
+    if (req.body.site) filter = { site: { $in: req.body.site } };
+    if (req.body.user) filter = { ...filter, user: req.body.user };
 
-    const features = new APIFeatures(Model.find(filter), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
+    const features = new APIFeatures(Model.find(filter), req.query).paginate();
     features.query
       .then((documents) => {
-        fetchedSites = documents;
+        fetchedModel = documents;
         return Model.find(filter).countDocuments();
       })
       .then((count) => {
@@ -83,7 +76,7 @@ exports.getAll = (Model) =>
         res.status(200).json({
           status: "success",
           results: count,
-          data: fetchedSites,
+          data: fetchedModel,
         });
       });
   });

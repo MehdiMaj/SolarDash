@@ -1,6 +1,7 @@
 const express = require("express");
-const zonesController = require("./../controllers/zoneController");
+const zoneController = require("./../controllers/zoneController");
 const authController = require("../controllers/authController");
+const sensorRouter = require("../routes/sensorRoutes");
 
 const router = express.Router({ mergeParams: true });
 
@@ -8,13 +9,16 @@ router.use(authController.protect);
 
 router
   .route("/")
-  .get(zonesController.getZones)
-  .post(zonesController.setSiteId, zonesController.createZone);
+  .get(zoneController.getZones)
+  .post(zoneController.setSiteId, zoneController.createZone);
 
 router
+  .route("/my-zones")
+  .get(zoneController.getZonesByUser, zoneController.getZones);
+router
   .route("/:id")
-  .delete(zonesController.deleteZone)
-  .patch(zonesController.updateZone)
-  .get(zonesController.getZone);
+  .delete(zoneController.deleteZone)
+  .patch(zoneController.updateZone)
+  .get(zoneController.getZone);
 
 module.exports = router;

@@ -16,12 +16,14 @@ const globalErrorHandler = require("./controllers/errorController");
 const userRouter = require("./routes/userRoutes");
 const siteRouter = require("./routes/siteRoutes");
 const zoneRouter = require("./routes/zoneRoutes");
+const sensorRouter = require("./routes/sensorRoutes");
 
 // Start express app
 const app = express();
 
 app.enable("trust proxy");
-
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
 app.use(cors());
@@ -81,6 +83,7 @@ app.use((req, res, next) => {
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/sites", siteRouter);
 app.use("/api/v1/zones", zoneRouter);
+app.use("/api/v1/sensors", sensorRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

@@ -13,4 +13,9 @@ export class LoginComponent {
     if (form.invalid) return;
     this.authService.login(form.value.email, form.value.password);
   }
+  onForgotPassword(form: NgForm, event: Event) {
+    event.preventDefault();
+    //if (!form.value.email=== "") return;
+    this.authService.forgotPassword(form.value.email);
+  }
 }
