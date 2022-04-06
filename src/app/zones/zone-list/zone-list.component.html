@@ -29,6 +29,31 @@
       </th>
       <td mat-cell *matCellDef="let row">{{ row.createdAt | date }}</td>
     </ng-container>
+    <!-- Edit Column -->
+    <ng-container matColumnDef="Edit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+        Edit
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <a
+          mat-button
+          color="primary"
+          [routerLink]="['/dashboard/edit-zone', row.id]"
+          >EDIT</a
+        >
+      </td>
+    </ng-container>
+    <!-- Delete Column -->
+    <ng-container matColumnDef="Delete">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+        DELETE
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-button color="warn" (click)="onDelete(row.id)">
+          DELETE
+        </button>
+      </td>
+    </ng-container>
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
       <td
