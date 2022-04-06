@@ -1,7 +1,8 @@
 <mat-card>
-  <form [formGroup]="form" (submit)="onSaveZone()">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSaveZone()" *ngIf="!isLoading">
     <mat-form-field>
-      <mat-label>Select an option</mat-label>
+      <mat-label>Select a Site</mat-label>
       <mat-select formControlName="site" [(value)]="selected">
         <mat-option *ngFor="let site of sites" value="{{ site.id }}">
           {{ site.name }}

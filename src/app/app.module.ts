@@ -17,6 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -32,6 +33,8 @@ import { ZoneCreateComponent } from './zones/zone-create/zone-create.component';
 import { ZoneListComponent } from './zones/zone-list/zone-list.component';
 import { SensorCreateComponent } from './sensors/sensor-create/sensor-create.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,7 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
     ZoneListComponent,
     SensorCreateComponent,
     ForgotPasswordComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,10 +71,13 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
     MatExpansionModule,
     MatSelectModule,
     MatTableModule,
+    MatDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent],
 })
 export class AppModule {}

@@ -14,7 +14,7 @@ router
   .get(sitesController.setUserId, sitesController.getSites);
 router
   .route("/:id")
-  .delete(sitesController.deleteZoneWithSite, sitesController.deleteSite)
+  .delete(sitesController.deleteSite, sitesController.deleteZoneWithSite)
   .patch(sitesController.updateSite)
   .get(sitesController.getSite);
 

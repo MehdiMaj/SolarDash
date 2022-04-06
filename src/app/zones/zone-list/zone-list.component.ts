@@ -39,7 +39,13 @@ export class ZoneListComponent implements AfterViewInit, OnDestroy {
   totalZones = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
-  displayedColumns: string[] = ['Name', 'Affected To', 'createdAt'];
+  displayedColumns: string[] = [
+    'Name',
+    'Affected To',
+    'createdAt',
+    'Edit',
+    'Delete',
+  ];
 
   sitesPerPage = 2;
   currentPage = 1;
@@ -64,6 +70,13 @@ export class ZoneListComponent implements AfterViewInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.zoneSub.unsubscribe();
+  }
+
+  onDelete(zoneId: string) {
+    this.isLoading = true;
+    this.zoneService.deleteZone(zoneId).subscribe(() => {
+      this.zoneService.getZones();
+    });
   }
 
   applyFilter(event: Event) {

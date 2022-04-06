@@ -56,4 +56,30 @@ export class ZoneService {
         });
       });
   }
+
+  getZone(id: string) {
+    return this.http.get<{ status: string; data: any }>(
+      'http://localhost:9000/api/v1/zones/' + id
+    );
+  }
+
+  deleteZone(zoneId: string) {
+    console.log(zoneId);
+    return this.http.delete('http://localhost:9000/api/v1/zones/' + zoneId);
+  }
+
+  updateZone(id: string, name: string, site: string, createdAt: Date) {
+    const postData: Zone = {
+      id: id,
+      name: name,
+      site: site,
+      createdAt: createdAt,
+    };
+
+    this.http
+      .patch('http://localhost:9000/api/v1/zones/' + id, postData)
+      .subscribe((response) => {
+        this.router.navigate(['dashboard/list-zones']);
+      });
+  }
 }

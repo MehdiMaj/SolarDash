@@ -15,11 +15,12 @@ export class SensorService {
   constructor(private http: HttpClient, private router: Router) {}
   addSensor(ID: string, zone: string) {
     const formData = new FormData();
+    formData.append('sensorId', ID);
     formData.append('Zone', zone);
     this.http
-      .patch<{ message: string; site: Sensor }>(
-        'http://localhost:9000/api/v1/sensors/' + ID,
-        { zone: formData.get('Zone') }
+      .post<{ message: string; sensor: Sensor }>(
+        'http://localhost:9000/api/v1/sensors/',
+        { zone: formData.get('Zone'), sensorId: formData.get('sensorId') }
       )
       .subscribe((responseData) => {
         //this.router.navigate(['dashboard/list-sensors']);

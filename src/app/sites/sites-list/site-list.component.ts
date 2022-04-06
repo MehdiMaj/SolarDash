@@ -41,9 +41,14 @@ export class SiteListComponent implements OnInit, OnDestroy {
 
   onDelete(postId: string) {
     this.isLoading = true;
-    this.siteService.deleteSite(postId).subscribe(() => {
-      this.siteService.getSites(this.sitesPerPage, this.currentPage);
-    });
+    this.siteService.deleteSite(postId).subscribe(
+      () => {
+        this.siteService.getSites(this.sitesPerPage, this.currentPage);
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
   }
 
   ngOnDestroy() {

@@ -9,7 +9,7 @@ router.use(authController.protect);
 router
   .route("/")
   .get(sensorController.getSensors)
-  .post(sensorController.createSensor);
+  .post(sensorController.getSensorGlobalById, sensorController.createSensor);
 
 router
   .route("/my-sensors")
@@ -17,7 +17,7 @@ router
 router
   .route("/:id")
   .delete(sensorController.deleteSensor)
-  .patch(sensorController.getIdSensor, sensorController.updateSensor)
+  .patch(sensorController.updateSensor)
   .get(sensorController.getSensor);
 
 module.exports = router;

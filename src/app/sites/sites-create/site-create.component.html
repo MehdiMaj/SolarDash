@@ -1,5 +1,6 @@
 <mat-card>
-  <form [formGroup]="form" (submit)="onSaveSite()">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSaveSite()" *ngIf="!isLoading">
     <mat-form-field>
       <mat-label>Enter the name of the site</mat-label>
       <input matInput formControlName="name" type="text" />

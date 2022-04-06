@@ -43,7 +43,7 @@ const routes: Routes = [
         component: SiteListComponent,
       },
       {
-        path: 'edit/:siteId',
+        path: 'edit-site/:siteId',
         component: SiteCreateComponent,
       },
       {
@@ -53,6 +53,10 @@ const routes: Routes = [
       {
         path: 'list-zones',
         component: ZoneListComponent,
+      },
+      {
+        path: 'edit-zone/:zoneId',
+        component: ZoneCreateComponent,
       },
       {
         path: 'create-sensor',

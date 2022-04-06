@@ -17,6 +17,7 @@ const userRouter = require("./routes/userRoutes");
 const siteRouter = require("./routes/siteRoutes");
 const zoneRouter = require("./routes/zoneRoutes");
 const sensorRouter = require("./routes/sensorRoutes");
+const sensorGlobalRouter = require("./routes/sensorGlobalRoutes");
 
 // Start express app
 const app = express();
@@ -84,6 +85,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/sites", siteRouter);
 app.use("/api/v1/zones", zoneRouter);
 app.use("/api/v1/sensors", sensorRouter);
+app.use("/api/v1/sensorsGlobal", sensorGlobalRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
