@@ -1,0 +1,11 @@
+<p *ngIf="dailyWeather.length == 0">Searching...</p>
+<div class="data" *ngIf="dailyWeather.length > 0">
+    <mat-card *ngFor="let forecast of dailyWeather">
+        <div id="rcorners1">
+            <img src="http://openweathermap.org/img/wn/{{forecast.weather[0].icon}}@2x.png" />
+            <h1 class="temp">{{ forecast.temp.day }}<sup>°C</sup></h1>
+            <p>UVI: {{ forecast.uvi}}</p>
+            <p>{{ forecast.dt*1000 | date: 'MMMM dd, yyyy' }}</p>
+        </div>
+    </mat-card>
+</div>

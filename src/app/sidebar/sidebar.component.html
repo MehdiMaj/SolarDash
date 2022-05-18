@@ -1,25 +1,80 @@
-<div class="sidebar">
-  <a class="active"><i class="fa fa-fw fa-home"></i>Home</a>
+<div id="mySidenav" class="sidenav">
 
-  <a [matMenuTriggerFor]="Sites"> <i class="fa fa-globe"></i>Sites </a>
+  <a class="active" routerLink="data-visualization">
+    <div>
+      <i class="fa fa-home"></i>
+    </div>
+    <div>
+      <span>Home</span>
+    </div>
+  </a>
+
+  <a [matMenuTriggerFor]="Sites">
+    <div>
+      <i class="fa fa-globe"></i>
+    </div>
+
+    <div>
+      <span> Sites</span>
+    </div>
+  </a>
   <mat-menu #Sites="matMenu">
     <a mat-menu-item routerLink="create-site">Add site</a>
     <a mat-menu-item routerLink="list-sites">My Sites</a>
   </mat-menu>
 
-  <a [matMenuTriggerFor]="Zones"> <i class="fa fa-anchor"></i>Zones </a>
+  <a [matMenuTriggerFor]="Zones">
+    <div>
+      <i class="fa fa-anchor"></i>
+    </div>
+    <div>
+      <span>Zones</span>
+    </div>
+  </a>
   <mat-menu #Zones="matMenu">
     <a mat-menu-item routerLink="create-zone">add Zone</a>
     <a mat-menu-item routerLink="list-zones">My Zones</a>
   </mat-menu>
 
-  <a [matMenuTriggerFor]="Sensors"> <i class="fa fa-barcode"></i>Sensors </a>
+  <a [matMenuTriggerFor]="Sensors">
+    <div>
+      <i class="fa fa-barcode"></i>
+    </div>
+    <div>
+      <span>Sensors</span>
+    </div>
+  </a>
   <mat-menu #Sensors="matMenu">
     <a mat-menu-item routerLink="create-sensor">add sensor</a>
     <a mat-menu-item>My Sensors</a>
   </mat-menu>
-</div>
 
-<div class="content">
-  <router-outlet></router-outlet>
+  <a routerLink="data-visualization-history"><i class="fa fa-calendar"></i><span>History</span></a>
+</div>
+<div id="main">
+  <mat-toolbar style="background-color: #303563; padding-left: 0px; ">
+
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+      (click)="openCloseNav()">
+      <mat-icon style="color: white;">menu</mat-icon>
+    </button>
+    <span style="color: white; margin-top: 3px;">SolarDash</span>
+    <span class="example-spacer"></span>
+
+    <div style="margin-left: auto; margin-top: 12px;">
+      <a [matMenuTriggerFor]="account">
+        <mat-icon style="color: white;">account_circle</mat-icon>
+      </a>
+      <mat-menu #account="matMenu">
+        <a mat-menu-item (click)="onLogout()">
+          <mat-icon>exit_to_app</mat-icon>Logout
+        </a>
+      </mat-menu>
+
+    </div>
+  </mat-toolbar>
+
+  <div class="content" style="padding-left:20px ; padding-top: 30px;">
+    <router-outlet></router-outlet>
+  </div>
 </div>

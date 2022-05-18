@@ -1,0 +1,172 @@
+<app-weather *ngIf="sites?.length>0" [location]="location"></app-weather>
+<mat-card>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Select a Site</mat-label>
+      <mat-select formControlName="site" (ngModelChange)="getZones();">
+        <mat-option *ngFor="let site of sites" value="{{ site.id }}">
+          {{ site.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf=" siteIsSelected">
+      <p *ngIf="zones.length == 0">No zone affected to this site</p>
+    </div>
+    <mat-form-field *ngIf=" zones?.length>0">
+      <mat-label>Select a zone</mat-label>
+      <mat-select formControlName="zone" (ngModelChange)="DataIsProcessed = false">
+        <mat-option *ngFor="let zone of zones" value="{{ zone.id }}">
+          {{ zone.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <div class="data">
+    <div>
+      <button mat-raised-button color="accent">Get data per site</button>
+    </div>
+    <div>
+      <button mat-raised-button color="accent" (click)="getDataPerZoneBothTypes()">Get
+        data per zone</button>
+    </div>
+  </div>
+</mat-card>
+
+
+
+<mat-card *ngIf="DataIsProcessed">
+  <h1 style="text-align:center;"> DATA REPORT </h1>
+  <h3 style="text-align: center;">SensorID: {{sensorDayByDay?.sensorId.sensorId}}</h3>
+
+  <mat-tab-group [selectedIndex]="selected.value"
+    (selectedIndexChange)="selected.setValue($event);getDataPerZone('compteur');">
+    <div class="tab-group">
+      <mat-tab label="DAY-BY-DAY">
+        <ng-template matTabContent>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker1" [formControl]="date" (dateChange)="getDataPerZone('compteur')">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="MONTHS">
+        <ng-template matTabContent>
+          <mat-form-field appearance="fill">
+            <mat-label>Select a Month</mat-label>
+            <input [formControl]="month" matInput placeholder="MM/YYYY" type="month"
+              (change)="getDataPerZone('compteur')">
+          </mat-form-field>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="YEARS">
+        <ng-template matTabContent>
+          <mat-form-field>
+            <mat-label>Select a Year</mat-label>
+            <mat-select [(ngModel)]="selectedYear" (selectionChange)="getDataPerZone('compteur')">
+              <mat-option *ngFor="let year of years" value="{{ year }}">
+                {{ year }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-template>
+      </mat-tab>
+    </div>
+  </mat-tab-group>
+  <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="select">
+    <mat-radio-button class="example-radio-button" [value]="'Total'">
+      Total
+    </mat-radio-button>
+    <mat-radio-button class="example-radio-button" [value]="'Phase A'" *ngIf="selected.value==0">
+      Phase A
+    </mat-radio-button>
+    <mat-radio-button class="example-radio-button" [value]="'Phase B'" *ngIf="selected.value==0">
+      Phase B</mat-radio-button>
+  </mat-radio-group>
+
+
+
+  <div *ngIf="sensorDayByDay && select == 'Total' && selected.value==0 ">
+    <app-main-chart [sensor]="sensorDayByDay"></app-main-chart>
+  </div>
+
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div *ngIf="sensorMonths && select == 'Total' && selected.value==1 && !isLoading">
+    <app-main-chart-by-year *ngIf="!isLoading" [sensor]="sensorMonths"></app-main-chart-by-year>
+  </div>
+  <div *ngIf="sensorYears && select == 'Total' && selected.value==2 && !isLoading">
+    <app-main-chart-by-year [sensor]="sensorYears"></app-main-chart-by-year>
+  </div>
+
+  <div *ngIf="sensorDayByDay && select == 'Phase A' && selected.value==0 && !isLoading">
+    <app-chart-phasesA [sensor]="sensorDayByDay"></app-chart-phasesA>
+  </div>
+  <div *ngIf=" sensorDayByDay && select == 'Phase B' && selected.value==0 && !isLoading">
+    <app-chart-phasesB [sensor]="sensorDayByDay"></app-chart-phasesB>
+  </div>
+</mat-card>
+
+
+<!-- /*************************Temperature Data***************************/ -->
+<mat-card *ngIf="DataIsProcessed">
+  <h1 style="text-align:center;"> WEATHER REPORT </h1>
+  <h3 style="text-align: center;">SensorID: {{sensorDayByDayTemp?.sensorId.sensorId}}</h3>
+  <mat-tab-group [selectedIndex]="selectedTemp.value"
+    (selectedIndexChange)="selectedTemp.setValue($event);getDataPerZone('temperature');">
+    <mat-tab label="DAY-BY-DAY">
+      <ng-template matTabContent>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="pickerTemp" [formControl]="dateTemp"
+            (dateChange)="getDataPerZone('temperature')">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="pickerTemp"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTemp></mat-datepicker>
+        </mat-form-field>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="MONTHS">
+      <ng-template matTabContent>
+        <mat-form-field appearance="fill">
+          <mat-label>Select a Month</mat-label>
+          <input [formControl]="monthTemp" matInput placeholder="MM/YYYY" type="month"
+            (change)="getDataPerZone('temperature')">
+        </mat-form-field>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="YEARS">
+      <ng-template matTabContent>
+        <mat-form-field>
+          <mat-label>Select a Year</mat-label>
+          <mat-select [(ngModel)]="selectedYearTemp" (selectionChange)="getDataPerZone('temperature')">
+            <mat-option *ngFor="let year of years" value="{{ year }}">
+              {{ year }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div *ngIf="sensorDayByDayTemp  && selectedTemp.value==0 ">
+    <app-temperature-chart [sensor]="sensorDayByDayTemp"></app-temperature-chart>
+  </div>
+
+  <!-- <div *ngIf="sensorDayByDay && selectTemp == 'Total' && selectedTemp.value==1 ">
+    <app-main-chart-by-year [sensor]="sensorMonthsTemp"></app-main-chart-by-year>
+  </div>
+  <div *ngIf="sensorYears && selectTemp == 'Total' && selectedTemp.value==2">
+    <app-main-chart-by-year [sensor]="sensorYearsTemp"></app-main-chart-by-year>
+  </div>
+  <div *ngIf="sensorDayByDay && selectTemp == 'Phase A' && selectedTemp.value==0 ">
+    <app-chart-phasesA [sensor]="sensorDayByDayTemp"></app-chart-phasesA>
+  </div>
+  <div *ngIf=" sensorDayByDay && selectTemp == 'Phase B' && selected.value==0  && sensorDayByDay">
+    <app-chart-phasesB [sensor]="sensorDayByDayTemp"></app-chart-phasesB>
+  </div> -->
+</mat-card>

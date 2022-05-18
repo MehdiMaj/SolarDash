@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const catchAsync = require("../utils/catchAsync");
 
-const SensorSchema = mongoose.Schema({
+const SensorGlobalSchema = mongoose.Schema({
   sensorId: {
     type: String,
     required: [true, "please We need the id"],
@@ -15,7 +16,17 @@ const SensorSchema = mongoose.Schema({
     },
     required: [true, "please We need the type"],
   },
+  ConsomationTripahse: [],
+  PositiveTripahse: [],
+  ReverserTipahse: [],
+  ActivePowerTipahse: [],
+  Voltage_CurrentrTipahse: [],
+  Temperature: [],
+  Humidite: [],
 });
+SensorGlobalSchema.methods.checkType = function () {
+  return this.type;
+};
 
-const SensorGlobal = mongoose.model("SensorGlobal", SensorSchema);
+const SensorGlobal = mongoose.model("SensorGlobal", SensorGlobalSchema);
 module.exports = SensorGlobal;

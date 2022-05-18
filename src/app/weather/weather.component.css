@@ -1,0 +1,22 @@
+.data {
+  display: grid;
+  grid-gap: 25px;
+  grid-template-columns: repeat(auto-fill, 265px);
+}
+#rcorners1 {
+  padding: 40px;
+  border-radius: 20px;
+  background: rgb(255, 255, 255);
+  color: #53627c;
+}
+sup {
+  font-size: 1rem;
+  font-weight: normal;
+}
+.temp {
+  font-size: 2rem;
+  font-weight: normal;
+}
+p {
+  font-weight: bold;
+}

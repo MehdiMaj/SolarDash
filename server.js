@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const consume = require("./backend/shared/consumer");
 
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
@@ -27,6 +28,8 @@ const port = process.env.PORT || 9000;
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
+// start the consumer, and log any errors
+consume();
 
 process.on("unhandledRejection", (err) => {
   console.log("UNHANDLED REJECTION! 💥 Shutting down...");

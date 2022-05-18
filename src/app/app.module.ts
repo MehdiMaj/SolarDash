@@ -18,6 +18,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -35,6 +38,18 @@ import { SensorCreateComponent } from './sensors/sensor-create/sensor-create.com
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
+import { HomeComponent } from './Home/home.component';
+
+import { MainChartComponent } from './charts/total-chart/main-chart.component';
+import { NgChartsModule } from 'ng2-charts';
+import { MatNativeDateModule } from '@angular/material/core';
+import { PhasesAChartComponent } from './charts/phasesA-chart/phasesA-chart.component';
+import { PhasesBChartComponent } from './charts/phasesB-chart/phasesB-chart.component';
+import { MainChartByYearComponent } from './charts/total-chart/main-filtredByYears-chart.component';
+import { MapComponent } from './map/map.component';
+import { WeatherComponent } from './weather/weather.component';
+import { TemperatureAndHumidityComponent } from './charts/Temperature/temperatureAndHumidity.component';
+import { HistoryComponent } from './History/history.component';
 
 @NgModule({
   declarations: [
@@ -50,8 +65,18 @@ import { ErrorComponent } from './error/error.component';
     SensorCreateComponent,
     ForgotPasswordComponent,
     ErrorComponent,
+    HomeComponent,
+    MainChartComponent,
+    PhasesAChartComponent,
+    PhasesBChartComponent,
+    MainChartByYearComponent,
+    MapComponent,
+    WeatherComponent,
+    TemperatureAndHumidityComponent,
+    HistoryComponent,
   ],
   imports: [
+    NgChartsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -72,6 +97,10 @@ import { ErrorComponent } from './error/error.component';
     MatSelectModule,
     MatTableModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatTabsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

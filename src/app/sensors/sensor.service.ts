@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { map, Subject } from 'rxjs';
 import { Sensor } from './sensor.model';
 
 @Injectable({ providedIn: 'root' })
 export class SensorService {
   private sensors: Sensor[] = [];
   private sensorsUpdated = new Subject<{
-    sites: Sensor[];
-    siteCount: number;
+    sensors: Sensor[];
+    sensorsCount: number;
   }>();
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -25,5 +25,75 @@ export class SensorService {
       .subscribe((responseData) => {
         //this.router.navigate(['dashboard/list-sensors']);
       });
+  }
+  getSensorUpdateListener() {
+    return this.sensorsUpdated.asObservable();
+  }
+  getSensorByZone(
+    zone: string | null,
+    dateStart: number,
+    dateEnd: number,
+    selectedFilter: string,
+    type: string
+  ) {
+    this.http
+      .get<{ status: string; data: any; results: number }>(
+        'http://localhost:9000/api/v1/sensors/SensorByZoneAndDate/' +
+          zone +
+          '?' +
+          'dateStart' +
+          '=' +
+          dateStart +
+          '&dateEnd=' +
+          dateEnd +
+          '&filter=' +
+          selectedFilter +
+          '&type=' +
+          type
+      )
+      .pipe(
+        map((sensorData) => {
+          console.log(sensorData);
+          return {
+            sensors: sensorData.data.map((sensor) => {
+              console.log(sensor);
+              return sensor;
+            }),
+            maxSensors: sensorData.results,
+          };
+        })
+      )
+      .subscribe((transformedSensorsData) => {
+        this.sensors = transformedSensorsData.sensors;
+        this.sensorsUpdated.next({
+          sensors: [...this.sensors],
+          sensorsCount: transformedSensorsData.maxSensors,
+        });
+      });
+  }
+  async getFiltredSensor(
+    zone: string | null,
+    dateStart: number,
+    dateEnd: number,
+    selectedFilter: string,
+    type: string
+  ) {
+    const data = await this.http
+      .get<{ status: string; data: any; results: number }>(
+        'http://localhost:9000/api/v1/sensors/SensorByZoneAndDate/' +
+          zone +
+          '?' +
+          'dateStart' +
+          '=' +
+          dateStart +
+          '&dateEnd=' +
+          dateEnd +
+          '&filter=' +
+          selectedFilter +
+          '&type=' +
+          type
+      )
+      .toPromise();
+    return data;
   }
 }

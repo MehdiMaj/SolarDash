@@ -13,10 +13,9 @@ export class SiteListComponent implements OnInit, OnDestroy {
   sites: Site[] = [];
   isLoading = false;
   totalSites = 0;
-  sitesPerPage = 2;
+  sitesPerPage = 5;
   currentPage = 1;
-  pageSizeOptions = [1, 2, 5, 10];
-  userIsAuthenticated = false;
+  pageSizeOptions = [5, 10, 20, 30];
   private sitesSub: Subscription;
 
   constructor(public siteService: SiteService) {}

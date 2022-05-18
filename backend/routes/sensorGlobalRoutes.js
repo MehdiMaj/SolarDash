@@ -4,14 +4,12 @@ const authController = require("../controllers/authController");
 
 const router = express.Router();
 
-router.use(authController.protect);
-
 router.route("/").post(sensorGlobalController.createSensor);
 //.get(sensorGlobalController.getSensors)
-/*router
+router
   .route("/:id")
-  .delete(sensorGlobalController.deleteSensor)
-  .patch(sensorGlobalController.getIdSensor, sensorController.updateSensor)
-  .get(sensorGlobalController.getSensor);*/
+  //.delete(sensorGlobalController.deleteSensor)
+  //.patch(sensorGlobalController.getIdSensor, sensorController.updateSensor)
+  .get(sensorGlobalController.getSensor);
 
 module.exports = router;

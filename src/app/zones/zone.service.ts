@@ -56,6 +56,37 @@ export class ZoneService {
         });
       });
   }
+  getZonesBySite(site: string) {
+    this.http
+      .get<{ status: string; data: any; results: number }>(
+        'http://localhost:9000/api/v1/sites/' + site + '/zones'
+      )
+      .pipe(
+        map((zoneData) => {
+          return {
+            zones: zoneData.data.map((zone) => {
+              return {
+                name: zone.name,
+                site: {
+                  site_name: zone.site.name,
+                  site_description: zone.site.description,
+                },
+                id: zone._id,
+                createdAt: zone.createdAt,
+              };
+            }),
+            maxZones: zoneData.results,
+          };
+        })
+      )
+      .subscribe((transformedSiteData) => {
+        this.zones = transformedSiteData.zones;
+        this.zonesUpdated.next({
+          zones: [...this.zones],
+          zoneCount: transformedSiteData.maxZones,
+        });
+      });
+  }
 
   getZone(id: string) {
     return this.http.get<{ status: string; data: any }>(

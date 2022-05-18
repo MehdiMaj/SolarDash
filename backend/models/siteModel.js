@@ -15,6 +15,9 @@ const sitesSchema = mongoose.Schema({
     ref: "User",
     required: true,
   },
+  lat: { type: String, required: [true, "please provide latitude"] },
+
+  lng: { type: String, required: [true, "please provide longitude"] },
 });
 
 const Site = mongoose.model("Site", sitesSchema);

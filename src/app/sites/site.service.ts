@@ -11,14 +11,21 @@ export class SiteService {
   private sitesUpdated = new Subject<{ sites: Site[]; siteCount: number }>();
   constructor(private http: HttpClient, private router: Router) {}
 
-  addSite(name: string, description: string) {
+  addSite(name: string, description: string, lng: string, lat: string) {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
+    formData.append('lng', lng);
+    formData.append('lat', lat);
     this.http
       .post<{ message: string; site: Site }>(
         'http://localhost:9000/api/v1/sites',
-        { name: formData.get('name'), description: formData.get('description') }
+        {
+          name: formData.get('name'),
+          description: formData.get('description'),
+          lat: formData.get('lat'),
+          lng: formData.get('lng'),
+        }
       )
       .subscribe((responseData) => {
         this.router.navigate(['dashboard/list-sites']);
@@ -39,6 +46,8 @@ export class SiteService {
                 name: site.name,
                 description: site.description,
                 id: site._id,
+                lat: site.lat,
+                lng: site.lng,
               };
             }),
             maxSites: siteData.results,
@@ -71,6 +80,8 @@ export class SiteService {
       id: id,
       name: name,
       description: description,
+      lat: null,
+      lng: null,
     };
 
     this.http

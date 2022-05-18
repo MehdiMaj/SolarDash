@@ -14,8 +14,8 @@ mat-spinner {
 a {
   text-decoration: none;
   color: gray;
-  position: relative;
-  left: 70%;
+  display: flex;
+  justify-content: flex-end;
 }
 a:hover {
   color: green;

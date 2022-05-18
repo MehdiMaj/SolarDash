@@ -5,6 +5,8 @@ const sensorRouter = require("../routes/sensorRoutes");
 
 const router = express.Router({ mergeParams: true });
 
+router.use("/:zoneId/sensors", sensorRouter);
+
 router.use(authController.protect);
 
 router

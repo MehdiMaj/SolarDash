@@ -1,0 +1,23 @@
+form {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.example-radio-group {
+  display: flex;
+  margin: 15px 0;
+  gap: 20px;
+  align-items: flex-start;
+}
+.data {
+  display: flex;
+  justify-content: space-around;
+}
+mat-card {
+  background-color: white;
+  border-radius: 10px;
+}
+.tab-group {
+  display: flex;
+  justify-content: space-between !important;
+}

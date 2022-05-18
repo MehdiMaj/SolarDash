@@ -43,6 +43,7 @@ exports.createOne = (Model) =>
 
 exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
+    console.log(req.params);
     let query = Model.findById(req.params.id);
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
@@ -61,11 +62,14 @@ exports.getAll = (Model) =>
     let filter = {};
     let fetchedModel;
     if (req.body.site) filter = { site: { $in: req.body.site } };
+    if (req.params.siteId) filter = { site: { $in: req.params.siteId } };
+    if (req.params.zoneId) filter = { zone: { $in: req.params.zoneId } };
     if (req.body.user) filter = { ...filter, user: req.body.user };
 
     const features = new APIFeatures(Model.find(filter), req.query).paginate();
     features.query
       .then((documents) => {
+        console.log(documents);
         fetchedModel = documents;
         return Model.find(filter).countDocuments();
       })

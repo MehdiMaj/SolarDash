@@ -4,6 +4,9 @@ import { AuthGuard } from './auth/auth.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { MainChartComponent } from './charts/total-chart/main-chart.component';
+import { HistoryComponent } from './History/history.component';
+import { HomeComponent } from './Home/home.component';
 import { SensorCreateComponent } from './sensors/sensor-create/sensor-create.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SiteCreateComponent } from './sites/sites-create/site-create.component';
@@ -61,6 +64,14 @@ const routes: Routes = [
       {
         path: 'create-sensor',
         component: SensorCreateComponent,
+      },
+      {
+        path: 'data-visualization',
+        component: HomeComponent,
+      },
+      {
+        path: 'data-visualization-history',
+        component: HistoryComponent,
       },
     ],
   },

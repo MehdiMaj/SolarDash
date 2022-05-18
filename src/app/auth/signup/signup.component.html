@@ -1,32 +1,18 @@
+<app-header></app-header>
 <mat-card class="mat-card">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
     <h1 style="text-align: center">Signup</h1>
     <mat-form-field>
       <mat-label>Enter your name</mat-label>
-      <input
-        matInput
-        name="name"
-        ngModel
-        type="email"
-        #nameInput="ngModel"
-        required
-      />
+      <input matInput name="name" ngModel type="email" #nameInput="ngModel" required />
       <mat-error *ngIf="emailInput.invalid">
         Please provide a valid email
       </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Enter your email</mat-label>
-      <input
-        matInput
-        name="email"
-        ngModel
-        type="email"
-        #emailInput="ngModel"
-        required
-        email
-      />
+      <input matInput name="email" ngModel type="email" #emailInput="ngModel" required email />
       <mat-error *ngIf="emailInput.invalid">
         Please provide a valid email
       </mat-error>
@@ -34,31 +20,13 @@
 
     <mat-form-field>
       <mat-label>Enter your Password</mat-label>
-      <input
-        type="password"
-        name="password"
-        ngModel
-        #passwordInput="ngModel"
-        matInput
-        required
-      />
-      <mat-error *ngIf="passwordInput.invalid"
-        >Please provide a valid password</mat-error
-      >
+      <input type="password" name="password" ngModel #passwordInput="ngModel" matInput required />
+      <mat-error *ngIf="passwordInput.invalid">Please provide a valid password</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Enter your Password again</mat-label>
-      <input
-        type="password"
-        name="confirmPassword"
-        ngModel
-        #confirmPasswordInput="ngModel"
-        matInput
-        required
-      />
-      <mat-error *ngIf="confirmPasswordInput.invalid"
-        >Please provide a valid password</mat-error
-      >
+      <input type="password" name="confirmPassword" ngModel #confirmPasswordInput="ngModel" matInput required />
+      <mat-error *ngIf="confirmPasswordInput.invalid">Please provide a valid password</mat-error>
     </mat-form-field>
     <button mat-raised-button color="accent" type="submit">Signup</button>
   </form>

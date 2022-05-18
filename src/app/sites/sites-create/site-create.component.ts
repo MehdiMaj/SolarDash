@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Site } from '../site.model';
@@ -15,6 +15,7 @@ export class SiteCreateComponent implements OnInit {
   private siteId: string;
   isLoading = false;
   site: Site;
+  marker;
   constructor(public siteService: SiteService, public route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -35,6 +36,8 @@ export class SiteCreateComponent implements OnInit {
             id: postData.data._id,
             name: postData.data.name,
             description: postData.data.description,
+            lat: null,
+            lng: null,
           };
           this.form.setValue({
             name: this.site.name,
@@ -56,7 +59,12 @@ export class SiteCreateComponent implements OnInit {
     if (this.mode === 'create') {
       const name = this.form.value.name;
       const description = this.form.value.description;
-      this.siteService.addSite(name, description);
+      this.siteService.addSite(
+        name,
+        description,
+        this.marker._lngLat.lng,
+        this.marker._lngLat.lat
+      );
     } else {
       this.siteService.updateSite(
         this.siteId,
@@ -65,5 +73,9 @@ export class SiteCreateComponent implements OnInit {
       );
     }
     this.form.reset();
+  }
+
+  receiveMarker($event) {
+    this.marker = $event;
   }
 }
